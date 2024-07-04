@@ -112,7 +112,7 @@ class BatchDense(nn.Module):
 
 def one_hot(y, numslot, mask=None):
     y_tensor = y.type(type_prefix.LongTensor).reshape(-1, 1)
-    y_one_hot = torch.zeros(y_tensor.size()[0], numslot, device=device, dtype=torch.float32,
+    y_one_hot = torch.zeros(y_tensor.size()[0], numslot, device=device, dtype=torch.float,
                             requires_grad=False).scatter_(1, y_tensor, 1)
     if mask is not None:
         y_one_hot = y_one_hot * mask

@@ -37,7 +37,7 @@ class NumpyGenerator(object):
         if self.scale is not None:
             x_batch = self.scale(x_batch)
 
-        x_batch = x_batch.astype('float32')
+        x_batch = x_batch.astype('float')
         return x_batch, y_batch
 
     def _shuffle_dataset(self):

@@ -58,18 +58,18 @@ class ODST(ModuleWithInit):
         initialize_selection_logits_(self.feature_selection_logits)
 
         self.feature_thresholds = nn.Parameter(
-            torch.full([num_trees, depth], float('nan'), dtype=torch.float32), requires_grad=True
+            torch.full([num_trees, depth], float('nan'), dtype=torch.float), requires_grad=True
         )  # nan values will be initialized on first batch (data-aware init)
 
         self.log_temperatures = nn.Parameter(
-            torch.full([num_trees, depth], float('nan'), dtype=torch.float32), requires_grad=True
+            torch.full([num_trees, depth], float('nan'), dtype=torch.float), requires_grad=True
         )
 
         # binary codes for mapping between 1-hot vectors and bin indices
         with torch.no_grad():
             indices = torch.arange(2 ** self.depth)
             offsets = 2 ** torch.arange(self.depth)
-            bin_codes = (indices.view(1, -1) // offsets.view(-1, 1) % 2).to(torch.float32)
+            bin_codes = (indices.view(1, -1) // offsets.view(-1, 1) % 2).to(torch.float)
             bin_codes_1hot = torch.stack([bin_codes, 1.0 - bin_codes], dim=-1)
             self.bin_codes_1hot = nn.Parameter(bin_codes_1hot, requires_grad=False)
             # ^-- [depth, 2 ** depth, 2]

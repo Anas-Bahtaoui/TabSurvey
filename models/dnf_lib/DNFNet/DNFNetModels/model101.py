@@ -22,7 +22,7 @@ class MNN(object):
         elastic_net_reg = None
 
         if self.config['model_type'] == 'FCN_with_oracle_mask':
-            m = tf.constant(mask, dtype='float32')
+            m = tf.constant(mask, dtype='float')
             x_i = tf.multiply(x, m)
         elif self.config['model_type'] == 'FCN_with_feature_selection':
             binary_threshold_eps = 1.

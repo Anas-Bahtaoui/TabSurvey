@@ -19,6 +19,11 @@ def load_data(args):
     if args.dataset == "CaliforniaHousing":  # Regression dataset
         X, y = sklearn.datasets.fetch_california_housing(return_X_y=True)
 
+    elif args.dataset == "experiment":
+        df = pd.read_csv(r"C:\Users\Anas\Desktop\TabSurvey\experiment\experiment_1.csv")
+        X = df.drop(["date", "densite_pulpe_sortie__thickener"], axis = 1) # for now !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        y = df["densite_pulpe_sortie__thickener"] 
+
     elif args.dataset == "Covertype":  # Multi-class classification dataset
         X, y = sklearn.datasets.fetch_covtype(return_X_y=True)
         # X, y = X[:10000, :], y[:10000]  # only take 10000 samples from dataset

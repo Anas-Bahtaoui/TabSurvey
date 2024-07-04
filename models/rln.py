@@ -41,8 +41,8 @@ class RLN(BaseModel):
             self.model = KerasClassifier(**arguments)
 
     def fit(self, X, y, X_val=None, y_val=None):
-        X = np.asarray(X).astype('float32')
-        X_val = np.asarray(X_val).astype('float32')
+        X = np.asarray(X).astype('float')
+        X_val = np.asarray(X_val).astype('float')
 
         if self.args.objective == "classification":
             # Needs the classification targets one hot encoded
@@ -56,11 +56,11 @@ class RLN(BaseModel):
         return history.history["loss"], history.history["val_loss"]
 
     def predict(self, X):
-        X = np.asarray(X).astype('float32')
+        X = np.asarray(X).astype('float')
         return super().predict(X)
 
     def predict_proba(self, X):
-        X = np.asarray(X).astype('float32')
+        X = np.asarray(X).astype('float')
         return super().predict_proba(X)
 
     def save_model(self, filename_extension="", directory="models"):

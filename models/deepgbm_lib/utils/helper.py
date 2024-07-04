@@ -10,7 +10,7 @@ import models.deepgbm_lib.config as config
 
 def eval_metrics(task, true, pred):
     if task == 'binary':
-        logloss = log_loss(true.astype(np.float64), pred.astype(np.float64))
+        logloss = log_loss(true.astype(float), pred.astype(float))
         auc = roc_auc_score(true, pred)
         # error = 1-sklearn.metrics.accuracy_score(true,(pred+0.5).astype(np.int32))
         return (logloss, auc)#, error)

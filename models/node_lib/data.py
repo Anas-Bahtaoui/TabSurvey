@@ -105,8 +105,8 @@ def fetch_A9A(path, train_size=None, valid_size=None, test_size=None):
         download("https://www.dropbox.com/s/9cqdx166iwonrj9/a9a?dl=1", train_path)
         download("https://www.dropbox.com/s/sa0ds895c0v4xc6/a9a.t?dl=1", test_path)
 
-    X_train, y_train = load_svmlight_file(train_path, dtype=np.float32, n_features=123)
-    X_test, y_test = load_svmlight_file(test_path, dtype=np.float32, n_features=123)
+    X_train, y_train = load_svmlight_file(train_path, dtype=float, n_features=123)
+    X_test, y_test = load_svmlight_file(test_path, dtype=float, n_features=123)
     X_train, X_test = X_train.toarray(), X_test.toarray()
     y_train[y_train == -1] = 0
     y_test[y_test == -1] = 0
@@ -159,8 +159,8 @@ def fetch_EPSILON(path, train_size=None, valid_size=None, test_size=None):
                 f.write(zipfile.read())
 
     print("reading dataset (it may take a long time)")
-    X_train, y_train = load_svmlight_file(train_path, dtype=np.float32, n_features=2000)
-    X_test, y_test = load_svmlight_file(test_path, dtype=np.float32, n_features=2000)
+    X_train, y_train = load_svmlight_file(train_path, dtype=float, n_features=2000)
+    X_test, y_test = load_svmlight_file(test_path, dtype=float, n_features=2000)
     X_train, X_test = X_train.toarray(), X_test.toarray()
     y_train, y_test = y_train.astype(np.int), y_test.astype(np.int)
     y_train[y_train == -1] = 0
@@ -211,8 +211,8 @@ def fetch_PROTEIN(path, train_size=None, valid_size=None, test_size=None):
         with open(fname, 'w') as f:
             f.write(raw)
 
-    X_train, y_train = load_svmlight_file(train_path, dtype=np.float32, n_features=357)
-    X_test, y_test = load_svmlight_file(test_path, dtype=np.float32, n_features=357)
+    X_train, y_train = load_svmlight_file(train_path, dtype=float, n_features=357)
+    X_test, y_test = load_svmlight_file(test_path, dtype=float, n_features=357)
     X_train, X_test = X_train.toarray(), X_test.toarray()
     y_train, y_test = y_train.astype(np.int), y_test.astype(np.int)
 
@@ -252,7 +252,7 @@ def fetch_YEAR(path, train_size=None, valid_size=None, test_size=51630):
         os.makedirs(path, exist_ok=True)
         download('https://www.dropbox.com/s/l09pug0ywaqsy0e/YearPredictionMSD.txt?dl=1', data_path)
     n_features = 91
-    types = {i: (np.float32 if i != 0 else np.int) for i in range(n_features)}
+    types = {i: (float if i != 0 else np.int) for i in range(n_features)}
     data = pd.read_csv(data_path, header=None, dtype=types)
     data_train, data_test = data.iloc[:-test_size], data.iloc[-test_size:]
 
@@ -297,7 +297,7 @@ def fetch_HIGGS(path, train_size=None, valid_size=None, test_size=5 * 10 ** 5):
             with open(data_path, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
     n_features = 29
-    types = {i: (np.float32 if i != 0 else np.int) for i in range(n_features)}
+    types = {i: (float if i != 0 else np.int) for i in range(n_features)}
     data = pd.read_csv(data_path, header=None, dtype=types)
     data_train, data_test = data.iloc[:-test_size], data.iloc[-test_size:]
 
@@ -361,9 +361,9 @@ def fetch_MICROSOFT(path):
     X_test, y_test, query_test = data_test.iloc[:, 2:].values, data_test.iloc[:, 0].values, data_test.iloc[:, 1].values
 
     return dict(
-        X_train=X_train.astype(np.float32), y_train=y_train.astype(np.int64), query_train=query_train,
-        X_valid=X_valid.astype(np.float32), y_valid=y_valid.astype(np.int64), query_valid=query_valid,
-        X_test=X_test.astype(np.float32), y_test=y_test.astype(np.int64), query_test=query_test,
+        X_train=X_train.astype(float), y_train=y_train.astype(np.int64), query_train=query_train,
+        X_valid=X_valid.astype(float), y_valid=y_valid.astype(np.int64), query_valid=query_valid,
+        X_test=X_test.astype(float), y_test=y_test.astype(np.int64), query_test=query_test,
     )
 
 
@@ -400,9 +400,9 @@ def fetch_YAHOO(path):
     X_test, y_test, query_test = data_test.iloc[:, 2:].values, data_test.iloc[:, 0].values, data_test.iloc[:, 1].values
 
     return dict(
-        X_train=X_train.astype(np.float32), y_train=y_train, query_train=query_train,
-        X_valid=X_valid.astype(np.float32), y_valid=y_valid, query_valid=query_valid,
-        X_test=X_test.astype(np.float32), y_test=y_test, query_test=query_test,
+        X_train=X_train.astype(float), y_train=y_train, query_train=query_train,
+        X_valid=X_valid.astype(float), y_valid=y_valid, query_valid=query_valid,
+        X_test=X_test.astype(float), y_test=y_test, query_test=query_test,
     )
 
 
@@ -433,9 +433,9 @@ def fetch_CLICK(path, valid_size=100_000, validation_seed=None):
     #X_val[cat_features] = cat_encoder.transform(X_val[cat_features])
     #X_test[cat_features] = cat_encoder.transform(X_test[cat_features])
     return dict(
-        X_train=X_train.values.astype('float32'), y_train=y_train,
-        X_valid=X_val.values.astype('float32'), y_valid=y_val,
-        X_test=X_test.values.astype('float32'), y_test=y_test
+        X_train=X_train.values.astype('float'), y_train=y_train,
+        X_valid=X_val.values.astype('float'), y_valid=y_val,
+        X_test=X_test.values.astype('float'), y_test=y_test
     )
 
 

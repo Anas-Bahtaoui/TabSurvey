@@ -246,11 +246,11 @@ class BaseModel(nn.Module):
 
                                 if labels:
                                     train_result[name].append(metric_fun(
-                                        y.cpu().data.numpy(), y_pred.cpu().data.numpy().astype("float64"),
+                                        y.cpu().data.numpy(), y_pred.cpu().data.numpy().astype("float"),
                                         labels=labels))
                                 else:
                                     train_result[name].append(metric_fun(
-                                        y.cpu().data.numpy(), y_pred.cpu().data.numpy().astype("float64")))
+                                        y.cpu().data.numpy(), y_pred.cpu().data.numpy().astype("float")))
 
             except KeyboardInterrupt:
                 t.close()
@@ -344,7 +344,7 @@ class BaseModel(nn.Module):
                 y_pred = model(x).cpu().data.numpy()  # .squeeze()
                 pred_ans.append(y_pred)
 
-        return np.concatenate(pred_ans).astype("float64")
+        return np.concatenate(pred_ans).astype("float")
 
     def input_from_feature_columns(self, X, feature_columns, embedding_dict, support_dense=True):
 

@@ -20,7 +20,7 @@ def cross_validation(model, X, y, args, save_model=False):
     test_timer = Timer()
 
     if args.objective == "regression":
-        kf = KFold(n_splits=args.num_splits, shuffle=args.shuffle, random_state=args.seed)
+        kf = KFold(n_splits=args.num_splits, shuffle=args.shuffle)#, random_state=args.seed)
     elif args.objective == "classification" or args.objective == "binary":
         kf = StratifiedKFold(n_splits=args.num_splits, shuffle=args.shuffle, random_state=args.seed)
     else:
@@ -28,8 +28,11 @@ def cross_validation(model, X, y, args, save_model=False):
 
     for i, (train_index, test_index) in enumerate(kf.split(X, y)):
 
-        X_train, X_test = X[train_index], X[test_index]
-        y_train, y_test = y[train_index], y[test_index]
+        X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+        y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+
+        # X_train, X_test = X[train_index], X[test_index]
+        # y_train, y_test = y[train_index], y[test_index]
 
         # X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.05, random_state=args.seed)
 
@@ -126,8 +129,10 @@ def main_once(args):
     X, y = load_data(args)
 
     model_name = str2model(args.model_name)
-
+    print(args.dataset)
+    print(args.model_name)
     parameters = args.parameters[args.dataset][args.model_name]
+    print(parameters)
     model = model_name(parameters, args)
 
     sc, time = cross_validation(model, X, y, args)

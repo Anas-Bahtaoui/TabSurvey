@@ -66,7 +66,7 @@ def TrainGBDT(train_x, train_y, test_x, test_y):
     
     # Make predictions on train data
     #preds = gbm.predict(train_x, raw_score=True)
-    #preds = preds.astype(np.float32)
+    #preds = preds.astype(float)
     return gbm #, preds
 
 
@@ -95,7 +95,7 @@ def SubGBDTLeaf_cls(train_x, test_x, gbm):
     n_trees = leaf_preds.shape[1]
 
     step = max(int((n_trees + num_slices - 1) // num_slices), 1)
-    leaf_output = np.zeros([n_trees, config.config['maxleaf']], dtype=np.float32)
+    leaf_output = np.zeros([n_trees, config.config['maxleaf']], dtype=float)
     
     # Get leaf outputs from all trees
     for tid in range(n_trees):
@@ -153,7 +153,7 @@ def SubGBDTLeaf_cls(train_x, test_x, gbm):
         new_train_y = np.zeros(train_x.shape[0])
         for jdx in tree_indices:
             new_train_y += np.take(leaf_output[jdx,:].reshape(-1), leaf_preds[:,jdx].reshape(-1))
-        new_train_y = new_train_y.reshape(-1,1).astype(np.float32)
+        new_train_y = new_train_y.reshape(-1,1).astype(float)
         
         # Compute the means of the leaf outputs
         tree_mean = np.mean(np.take(leaf_output, tree_indices,0))

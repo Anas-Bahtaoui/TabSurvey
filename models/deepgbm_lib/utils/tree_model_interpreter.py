@@ -21,7 +21,7 @@ def getItemByTree(tree, item='split_feature'):
     split_nodes = tree.split_nodes
     res = np.zeros(split_nodes + tree.raw['num_leaves'], dtype=np.int32)
     if 'value' in item or 'threshold' in item or 'split_gain' in item:
-        res = res.astype(np.float64)
+        res = res.astype(float)
 
     def getFeature(root, res):
         if 'child' in item:

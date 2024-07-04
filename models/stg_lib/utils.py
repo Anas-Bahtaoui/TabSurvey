@@ -29,7 +29,7 @@ class SimpleDataset(Dataset):
 
     def __getitem__(self, i):
         data = self.X[i]
-        data = np.array(data).astype(np.float32)
+        data = np.array(data).astype(float)
         if self.y is not None:
             return dict(input=data, label=self.y[i])
         else:
@@ -300,7 +300,7 @@ def create_sin_dataset(n,p):
     relevant=np.hstack((x1,x2))
     noise_vector = norm.rvs(loc=0, scale=1, size=[n,p-2])
     data = np.concatenate([relevant, noise_vector], axis=1)
-    return data, y.astype(np.float32)
+    return data, y.astype(float)
 
 
 

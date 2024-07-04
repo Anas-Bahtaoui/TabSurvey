@@ -122,11 +122,11 @@ class ModelHandler:
         self.labels = None
 
     def define_placeholders(self):
-        self.x = tf.placeholder(tf.float32, shape=[None, self.config['input_dim']], name="x")
-        self.y = tf.placeholder(tf.float32, shape=[None, self.config['output_dim']], name="y")
-        self.y_weights = tf.placeholder(tf.float32, shape=[None, 1], name="y_weights")
-        self.lr = tf.placeholder(tf.float32, name="lr")
-        self.dropout_rate = tf.placeholder(tf.float32, name="dropout_rate")
+        self.x = tf.placeholder(tf.float, shape=[None, self.config['input_dim']], name="x")
+        self.y = tf.placeholder(tf.float, shape=[None, self.config['output_dim']], name="y")
+        self.y_weights = tf.placeholder(tf.float, shape=[None, 1], name="y_weights")
+        self.lr = tf.placeholder(tf.float, name="lr")
+        self.dropout_rate = tf.placeholder(tf.float, name="dropout_rate")
         self.is_training = tf.placeholder(tf.bool, name="is_training")
         placeholders = {
             'x': self.x,

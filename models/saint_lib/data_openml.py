@@ -40,13 +40,13 @@ class DataSetCatCon(Dataset):
             cat_cols = []
 
         self.X1 = X[:, cat_cols].copy().astype(np.int64)  # categorical columns
-        self.X2 = X[:, con_cols].copy().astype(np.float32)  # numerical columns
+        self.X2 = X[:, con_cols].copy().astype(float)  # numerical columns
         self.X1_mask = X_mask[:, cat_cols].copy().astype(np.int64)  # categorical columns
         self.X2_mask = X_mask[:, con_cols].copy().astype(np.int64)  # numerical columns
         if task == 'regression':
-            self.y = Y['data'].astype(np.float32)
+            self.y = Y['data'].astype(float)
         else:
-            self.y = Y['data']  # .astype(np.float32)
+            self.y = Y['data']  # .astype(float)
         self.cls = np.zeros_like(self.y, dtype=int)
         self.cls_mask = np.ones_like(self.y, dtype=int)
         if continuous_mean_std is not None:

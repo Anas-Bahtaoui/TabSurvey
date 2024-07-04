@@ -80,7 +80,7 @@ def create_random_mask(input_dim, keep_feature_prob_arr, n_literals_per_formula_
         formulas_random_mask.append(np.copy(mask))
         for _ in range(n_literals_in_formula):
             literals_random_mask.append(np.copy(mask))
-    return np.array(literals_random_mask).T.astype('float32'), np.array(formulas_random_mask).T.astype('float32')
+    return np.array(literals_random_mask).T.astype('float'), np.array(formulas_random_mask).T.astype('float')
 
 
 def extension_matrix(n_formulas, n_literals_per_formula_arr):
@@ -93,7 +93,7 @@ def extension_matrix(n_formulas, n_literals_per_formula_arr):
         for _ in range(n_nodes_in_tree):
             mat.append(v)
         formula_index += 1
-    return denseNDArrayToSparseTensor(np.array(mat).T.astype('float32'))
+    return denseNDArrayToSparseTensor(np.array(mat).T.astype('float'))
 
 
 ################################################################################################################################################################
@@ -153,7 +153,7 @@ def denseNDArrayToSparseTensor(arr):
 
     if arr.dtype == bool:
         idx = np.vstack(idx).T
-        return tf.SparseTensor(idx, np.ones(idx.shape[0]).astype('float32'), arr.shape)
+        return tf.SparseTensor(idx, np.ones(idx.shape[0]).astype('float'), arr.shape)
     else:
         return tf.SparseTensor(np.vstack(idx).T, arr[idx], arr.shape)
 

@@ -115,8 +115,8 @@ def train(train_num, test_num, train_cat, test_cat, feature_sizes, save_model=Fa
                       amsgrad=False, model_decay_opt=deepgbm_model, weight_decay_opt=config.config['l2_reg_opt'],
                       key_opt='deepgbm')
 
-    x_train = np.concatenate([x_train, np.zeros((x_train.shape[0], 1), dtype=np.float32)], axis=-1)
-    x_test = np.concatenate([x_test, np.zeros((x_test.shape[0], 1), dtype=np.float32)], axis=-1)
+    x_train = np.concatenate([x_train, np.zeros((x_train.shape[0], 1), dtype=float)], axis=-1)
+    x_test = np.concatenate([x_test, np.zeros((x_test.shape[0], 1), dtype=float)], axis=-1)
 
     _, _, loss_history, val_loss_history = trainModel(deepgbm_model, x_train, y_train, tree_outputs, x_test, y_test,
                                                       optimizer,
@@ -145,7 +145,7 @@ def train(train_num, test_num, train_cat, test_cat, feature_sizes, save_model=Fa
 
 def evaluate(model, test_num, test_cat):
     x_test, y_test = test_num
-    x_test = np.concatenate([x_test, np.zeros((x_test.shape[0], 1), dtype=np.float32)], axis=-1)
+    x_test = np.concatenate([x_test, np.zeros((x_test.shape[0], 1), dtype=float)], axis=-1)
 
     print('\n################### Evaluate model #######################################\n')
 
@@ -176,7 +176,7 @@ def predict(model, data, ce, ne):
     data_cat = ce.transform(data.copy()).astype('int32')
     data_num = ne.transform(data.copy())
 
-    data_num = np.concatenate([data_num, np.zeros((data_num.shape[0], 1), dtype=np.float32)], axis=-1)
+    data_num = np.concatenate([data_num, np.zeros((data_num.shape[0], 1), dtype=float)], axis=-1)
 
     print('\n################### Make predictions #######################################\n')
 
